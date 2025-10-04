@@ -16,10 +16,24 @@ class Survey extends Model
     protected static $fields = array(
         'survey_id',
         'survey_name',
+        'company_id',
     );
 
     public $questions = array();
     public $responses = array();
+
+    /**
+     * Get the company associated with this survey
+     *
+     * @param PDO $pdo the database to search in
+     * @return Company returns Company object or null
+     */
+    public function getCompany(PDO $pdo)
+    {
+        if (!empty($this->company_id))
+            return Company::queryRecordById($pdo, $this->company_id);
+        return null;
+    }
 
     /**
      * Get the question records associated with this survey, and assign to

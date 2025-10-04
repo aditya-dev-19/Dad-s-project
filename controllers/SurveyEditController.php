@@ -24,6 +24,10 @@ class SurveyEditController extends Controller
 
         $survey = $this->getSurvey($request);
         $this->assign('survey', $survey);
+        
+        // Get all companies for the dropdown
+        $companies = Company::queryRecords($this->pdo, array('sort' => 'company_name'));
+        $this->assign('companies', $companies);
 
         if (isset($request['status']) && $request['status'] == 'success')
             $this->assign('statusMessage', 'Assessment updated successfully');

@@ -34,6 +34,20 @@
                 <label>Survey title:</label>
                 <input type="text" id="survey_name" name="survey_name" value="<?php echo htmlspecialchars($survey->survey_name); ?>" />
               </div>
+              <div>
+                <label>Company: <span style="color: red;">*</span></label>
+                <select id="company_id" name="company_id" required>
+                  <option value="">-- Select Company --</option>
+                  <?php foreach ($companies as $company): ?>
+                  <option value="<?php echo htmlspecialchars($company->company_id); ?>"
+                    <?php if (!empty($survey->company_id) && $survey->company_id == $company->company_id): ?>
+                      selected="selected"
+                    <?php endif; ?>>
+                    <?php echo htmlspecialchars($company->company_name); ?>
+                  </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
               <div class="questions_container">
                 <h2>Questions</h2>
                 <div class="questions">

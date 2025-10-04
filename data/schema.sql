@@ -6,6 +6,20 @@ CREATE TABLE login (
     last_name TEXT NOT NULL
 );
 
+-- Add after the login table
+CREATE TABLE company (
+    company_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    company_name TEXT NOT NULL
+);
+
+-- Update survey table definition
+CREATE TABLE survey (
+    survey_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    survey_name TEXT NOT NULL,
+    company_id INTEGER,
+    FOREIGN KEY (company_id) REFERENCES company (company_id) ON UPDATE CASCADE ON DELETE SET NULL
+);
+
 CREATE TABLE survey (
     survey_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     survey_name TEXT NOT NULL

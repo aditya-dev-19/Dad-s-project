@@ -24,6 +24,9 @@
       <li>
         <a href="login.php">Login</a>
       </li>
+      <li>
+        <a href="companies.php">Manage Companies</a>
+      </li>
       <?php endif; ?>
     </ul>
   </div>
