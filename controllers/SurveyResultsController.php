@@ -58,7 +58,8 @@ class SurveyResultsController extends Controller
 
         $fp = fopen('php://output', 'w');
 
-        $headers = array();
+        // Add "Submission Time" as first header
+        $headers = array('Submission Time');
         foreach ($survey->questions as $question)
             $headers[] = iconv('UTF-8', 'WINDOWS-1252', $question->question_text);
 
@@ -67,6 +68,15 @@ class SurveyResultsController extends Controller
         foreach ($survey->responses as $response)
         {
             $row = array();
+            
+            // Add submission timestamp as first column
+            if (!empty($response->time_taken)) {
+                $row[] = iconv('UTF-8', 'WINDOWS-1252', date('Y-m-d H:i:s', strtotime($response->time_taken)));
+            } else {
+                $row[] = 'N/A';
+            }
+            
+            // Add question responses
             foreach ($survey->questions as $question)
             {
                 $field = 'question_' . $question->question_id;

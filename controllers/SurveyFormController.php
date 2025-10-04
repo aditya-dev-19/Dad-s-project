@@ -72,7 +72,7 @@ class SurveyFormController extends Controller
     protected function setSurveyResponseValues(Survey $survey, SurveyResponse $surveyResponse, &$request)
     {
         $surveyResponse->survey_id = $survey->survey_id;
-        $surveyResponse->time_taken = gmdate('Y-m-d H:i:s');
+        $surveyResponse->time_taken = date('Y-m-d H:i:s');
         $surveyResponse->answers = array();
 
         if (!empty($request['question_id']))

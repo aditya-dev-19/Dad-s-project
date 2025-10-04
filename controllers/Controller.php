@@ -1,4 +1,6 @@
 <?php
+// default timezone
+date_default_timezone_set('Asia/Kolkata');
 
 // Set include path to look for classes in the models directory, then in the controllers directory
 set_include_path(get_include_path() . PATH_SEPARATOR . 'models' . PATH_SEPARATOR . 'controllers');

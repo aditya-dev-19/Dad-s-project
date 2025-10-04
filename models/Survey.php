@@ -17,6 +17,7 @@ class Survey extends Model
         'survey_id',
         'survey_name',
         'company_id',
+        'created_at',  // Added timestamp field
     );
 
     public $questions = array();
@@ -69,7 +70,7 @@ class Survey extends Model
                 $params["question_id_{$question->question_id}"] = $question->question_id;
             }
             $questionSubSelectSql = implode(', ', $questionSubSelects);
-            $sql = "select sr.*, $questionSubSelectSql from survey_response sr where sr.survey_id = :survey_id";
+            $sql = "select sr.survey_response_id, sr.time_taken, $questionSubSelectSql from survey_response sr where sr.survey_id = :survey_id ORDER BY sr.time_taken DESC";
             $params['survey_id'] = $this->survey_id;
 
             $stmt = $pdo->prepare($sql);
@@ -143,6 +144,16 @@ class Survey extends Model
                 $uniqueID = __CLASS__ . uniqid();
             return $uniqueID;
         }
+    }
+    
+    public function storeRecord(PDO $pdo)
+    {
+        // Set created_at timestamp for new surveys
+        if (empty($this->survey_id) && empty($this->created_at)) {
+            $this->created_at = date('Y-m-d H:i:s');  // Changed from gmdate
+        }
+        
+        parent::storeRecord($pdo);
     }
 }
 

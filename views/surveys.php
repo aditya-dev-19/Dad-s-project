@@ -46,6 +46,11 @@
     .ui-accordion-content .grid {
       margin: 0;
     }
+    .created-date {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -69,6 +74,7 @@
                 <table class="grid">
                   <tr>
                     <th>Survey Name</th>
+                    <th>Created</th>
                     <th>Edit</th>
                     <th>Take Survey</th>
                     <th>View Results</th>
@@ -76,7 +82,18 @@
                   </tr>
                   <?php foreach ($company->surveys as $survey): ?>
                     <tr>
-                      <td><?php echo htmlspecialchars($survey->survey_name); ?></td>
+                      <td>
+                        <?php echo htmlspecialchars($survey->survey_name); ?>
+                      </td>
+                      <td class="created-date">
+                        <?php 
+                        if (!empty($survey->created_at)) {
+                          echo date('M j, Y', strtotime($survey->created_at));
+                        } else {
+                          echo 'N/A';
+                        }
+                        ?>
+                      </td>
                       <td><a class="edit_survey" href="survey_edit.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">Edit</a></td>
                       <td><a class="take_survey" href="survey_form.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>" target="_blank">Visit page</a></td>
                       <td><a class="take_survey" href="survey_results.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">View Results</a></td>
@@ -91,13 +108,14 @@
           <p><em>No companies with assessments found</em></p>
         <?php endif; ?>
 
-        <!-- Unassigned Surveys -->
+        <!-- Unassigned Surveys
         <?php if (!empty($unassignedSurveys)): ?>
           <div style="margin-top: 30px;">
             <h2>Unassigned Assessments</h2>
             <table class="grid">
               <tr>
                 <th>Survey Name</th>
+                <th>Created</th>
                 <th>Edit</th>
                 <th>Take Survey</th>
                 <th>View Results</th>
@@ -106,6 +124,15 @@
               <?php foreach ($unassignedSurveys as $survey): ?>
                 <tr>
                   <td><?php echo htmlspecialchars($survey->survey_name); ?></td>
+                  <td class="created-date">
+                    <?php 
+                    if (!empty($survey->created_at)) {
+                      echo date('M j, Y', strtotime($survey->created_at));
+                    } else {
+                      echo 'N/A';
+                    }
+                    ?>
+                  </td>
                   <td><a class="edit_survey" href="survey_edit.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">Edit</a></td>
                   <td><a class="take_survey" href="survey_form.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>" target="_blank">Visit page</a></td>
                   <td><a class="take_survey" href="survey_results.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">View Results</a></td>
@@ -114,7 +141,7 @@
               <?php endforeach; ?>
             </table>
           </div>
-        <?php endif; ?>
+        <?php endif; ?> -->
 
         <div style="margin-top: 20px;">
           <a id="add_survey_button" href="survey_edit.php">Add Survey</a>
